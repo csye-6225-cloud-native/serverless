@@ -12,12 +12,15 @@ functions.cloudEvent("verifyEmail", async (cloudEvent) => {
   const messageData = Buffer.from(base64json, "base64").toString();
   if (!messageData || messageData == "") {
     console.error("Invalid request message");
+    return;
   }
-  
+
+  let jsonPayload = null;
   try {
-    const jsonPayload = JSON.parse(messageData);
+    jsonPayload = JSON.parse(messageData);
     if (!jsonPayload || !jsonPayload.username || jsonPayload.username == "") {
       console.error("Invalid request data:", jsonPayload);
+      return;
     }
   } catch (err) {
     console.error(`"Invalid request data: ${messageData}"`, err);
