@@ -2,8 +2,8 @@ const dotenv = require("dotenv");
 const formData = require("form-data");
 const Mailgun = require("mailgun.js");
 const functions = require("@google-cloud/functions-framework");
-const EmailLog = require("./models/email_log.model");
 const db = require("./configs/db.config");
+const EmailLog = require("./models/email_log.model");
 
 dotenv.config();
 
@@ -47,7 +47,7 @@ functions.cloudEvent("verifyEmail", async (cloudEvent) => {
         firstname: jsonPayload.firstname,
         lastname: jsonPayload.lastname,
         email_address: jsonPayload.username,
-        verification_link: `http://${process.env.APP_DOMAIN}:${process.env.APP_PORT}/v1/user/verifyEmail?token=${jsonPayload.verificationToken}`,
+        verification_link: `https://${process.env.APP_DOMAIN}/v1/user/verifyEmail?token=${jsonPayload.verificationToken}`,
         verification_link_expiry: jsonPayload.verificationTokenExpiry,
       }),
     });
